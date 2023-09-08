@@ -25,6 +25,30 @@
                 $(this).prev('br').remove();
                 $(this).remove();
             });
+
+            $('.store .photos ').on('click', 'button', function (event) {
+                event.preventDefault();
+                $(this).prev('input').remove();
+                $(this).prev('br').remove();
+                $(this).remove();
+            });
+            
+            $('.store #addPhoto').on('click', function(event) {
+                event.preventDefault();
+                $( ".store .photos" ).append( '<input type="text" name="photoUrls[]"><button id="deletePhoto">Usuń</button><br>');
+            });
+
+            $('.edit .photos ').on('click', 'button', function (event) {
+                event.preventDefault();
+                $(this).prev('input').remove();
+                $(this).prev('br').remove();
+                $(this).remove();
+            });
+
+            $('.edit #addPhoto').on('click', function(event) {
+                event.preventDefault();
+                $( ".edit .photos" ).append( '<input type="text" name="photoUrls[]"><button id="deletePhoto">Usuń</button><br>');
+            });
         });
     </script>
 </head>
@@ -45,6 +69,11 @@
                 <input type="text" name="tags[][name]"><br>
             </div>
             <button id="addTag">Dodaj taga</button><br>
+            <label for="photos">URL zdjęć</label>
+            <div class="photos">
+                <input type="text" name="photoUrls[]"><br>
+            </div>
+            <button id="addPhoto">Dodaj zdjęcie</button><br>
             <label for="name">Status</label>
             <select name="status">
                 <option value="available">Dostępny</option>
@@ -77,16 +106,24 @@
 
     @if (is_array($pet))
         <ul>
-            <li>ID : {{ $pet['id'] }}</li>
-            <li>Nazwa : {{ $pet['name'] }}</li>
-            <li>Nazwa kategorii : {{ $pet['category']['name'] }}</li>
+            <li>ID : {{ $pet['id'] ?? ''}}</li>
+            <li>Nazwa : {{ $pet['name'] ?? ''}}</li>
+            <li>Nazwa kategorii : {{ $pet['category']['name'] ?? ''}}</li>
             <li>
             Tagi:
                 @foreach ($pet['tags'] as $tag)
-                {{ $tag['name']}}
+                    {{ $tag['name'] ?? '' }}
                 @endforeach
             </li>
-            <li>Status : {{ $pet['status'] }}</li>
+            <li>
+            Zdjęcia:
+                @foreach ($pet['photoUrls'] as $photoUrl)
+                    @if ($photoUrl != null)
+                        <img src="{{ $photoUrl }}" width="300" height="300">
+                    @endif
+                @endforeach
+            </li>
+            <li>Status : {{ $pet['status'] ?? ''}}</li>
         </ul>
     @endif
 
@@ -101,11 +138,16 @@
             <input type="text" name="name"><br>
             <label for="categoryName">Nazwa kategorii</label>
             <input type="text" name="categoryName"><br>
-            <label for="name">Tagi</label>
+            <label for="tags">Tagi</label>
             <div class="tags">
                 <input type="text" name="tags[][name]"><br>
             </div>
             <button id="addTag">Dodaj taga</button><br>
+            <label for="photos">URL zdjęć</label>
+            <div class="photos">
+                <input type="text" name="photoUrls[]"><br>
+            </div>
+            <button id="addPhoto">Dodaj zdjęcie</button><br>
             <label for="name">Status</label>
             <select name="status">
                 <option value="available">Dostępny</option>

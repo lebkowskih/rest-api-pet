@@ -27,6 +27,7 @@ final class PetController extends Controller
                 'name' => $request->input('categoryName'),
             ],
             'tags' => $request->input('tags'),
+            'photoUrls' => $request->input('photoUrls'),
         ]);
 
         if ($response->successful()) {
@@ -74,6 +75,7 @@ final class PetController extends Controller
                 'name' => $request->input('categoryName'),
             ],
             'tags' => $request->input('tags'),
+            'photoUrls' => $request->input('photoUrls'),
         ]);
 
         if ($response->successful()) {
